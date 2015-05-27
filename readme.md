@@ -1,4 +1,18 @@
+Based on [nijtmans/fossil](https://registry.hub.docker.com/u/nijtmans/fossil/).
 
+Simple, high-reliability, distributed software configuration management system, build for the Raspberry Pi.
+
+Tested on a Raspberry Pi B and a 2 B.
+
+You can start it with:
+
+    sudo docker run -d -p 8080:8080 duvel/rpi-fossil
+
+username = “admin”, password = “????”.
+
+You can retrieve the password with:
+
+    sudo docker logs <container>
 
 # Host existing repository
 ## Prepare docker host
