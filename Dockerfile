@@ -19,9 +19,9 @@ RUN cd tcl-src/unix && \
 ### If you want to build "release", change the next line accordingly.
 ENV FOSSIL_INSTALL_VERSION trunk
 
-RUN curl "http://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
+RUN curl "http://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=trunk” | tar zx
 WORKDIR /fossil-src
-RUN ./configure --disable-lineedit --disable-fusefs --json --with-th1-docs --with-th1-hooks --with-tcl
+RUN ./configure --disable-fusefs --json --with-th1-docs --with-th1-hooks --with-tcl
 RUN make && \
 	strip fossil && \
 	chmod a+rx fossil && \
