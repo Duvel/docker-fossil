@@ -12,7 +12,7 @@ RUN apt-get update -y && \
 
 RUN curl "http://core.tcl.tk/tcl/tarball/tcl-src.tar.gz?name=tcl-src&uuid=release" | tar zx
 RUN cd tcl-src/unix && \
-	./configure --prefix=/usr --disable-shared --disable-threads --disable-load && \
+	./configure --prefix=/usr --disable-threads && \
 	make && \
 	make install
 
