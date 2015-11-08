@@ -1,7 +1,7 @@
 ###
 #   Dockerfile for Fossil
 ###
-FROM resin/rpi-raspbian:wheezy
+FROM resin/rpi-raspbian:jessie
 
 ### Now install some additional parts we will need for the build
 RUN apt-get update -y && \
@@ -17,9 +17,9 @@ RUN cd tcl-src/unix && \
 	make install
 
 ### If you want to build "release", change the next line accordingly.
-ENV FOSSIL_INSTALL_VERSION trunk
+ENV FOSSIL_INSTALL_VERSION branch-1.34
 
-RUN curl "http://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=trunk” | tar zx
+RUN curl "http://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=branch-1.34" | tar zx
 WORKDIR /fossil-src
 RUN ./configure --disable-fusefs --json --with-th1-docs --with-th1-hooks --with-tcl
 RUN make && \

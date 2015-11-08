@@ -1,11 +1,11 @@
 ###
 #   Dockerfile for Fossil
 ###
-FROM resin/rpi-raspbian:wheezy
+FROM resin/rpi-raspbian:jessie
 
 ### Now install some additional parts we will need for the build
 RUN apt-get update -y && \
-	apt-get install -y libssl1.0.0 && \
+	apt-get install -y libssl1.0.0 libtcl8.6 && \
 	apt-get clean && \
 	groupadd -r fossil -g 433 && \
 	useradd -u 431 -r -g fossil -d /opt/fossil -s /sbin/nologin -c "Fossil user" fossil && \
