@@ -17,9 +17,9 @@ RUN cd tcl-src/unix && \
 	make install
 
 ### If you want to build "release", change the next line accordingly.
-ENV FOSSIL_INSTALL_VERSION branch-1.37
+ENV FOSSIL_INSTALL_VERSION version-2.1
 
-RUN curl "http://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=branch-1.37" | tar zx
+RUN curl "http://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
 WORKDIR /fossil-src
 RUN ./configure --disable-fusefs --json --with-th1-docs --with-th1-hooks --with-tcl
 RUN make && \
