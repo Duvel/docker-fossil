@@ -1,7 +1,7 @@
 ###
 #   Dockerfile for Fossil
 ###
-FROM resin/rpi-raspbian:jessie
+FROM resin/rpi-raspbian:jessie as base
 
 ### Now install some additional parts we will need for the build
 RUN apt-get update -y && \
@@ -24,12 +24,18 @@ WORKDIR /fossil-src
 RUN ./configure --disable-fusefs --json --with-th1-docs --with-th1-hooks --with-tcl
 RUN make && \
 	strip fossil && \
-	chmod a+rx fossil && \
-	mkdir dist && \
-	cp fossil dist
+	chmod a+rx fossil
+	
+FROM resin/raspberry-pi-alpine:3.4
 
-COPY /Dockerfile.run /fossil-src/dist/Dockerfile
+RUN apk add --no-cache tcl openssl
 
-WORKDIR /fossil-src/dist
+COPY --from=base /fossil-src/fossil /usr/bin/
 
-CMD tar -cf - .
+USER fossil
+
+ENV HOME /opt/fossil
+
+EXPOSE 8080
+
+CMD ["/usr/bin/fossil", "server", "--create", "--user", "admin", "/opt/fossil/repository.fossil"]
