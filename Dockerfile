@@ -1,7 +1,4 @@
-###
-#   Dockerfile for Fossil
-###
-FROM resin/rpi-raspbian:jessie as base
+FROM resin/rpi-raspbian:jessie-20171110 as base
 
 ### Now install some additional parts we will need for the build
 RUN apt-get update -y && \
@@ -17,18 +14,25 @@ RUN cd tcl-src/unix && \
 	make install
 
 ### If you want to build "release", change the next line accordingly.
-ENV FOSSIL_INSTALL_VERSION version-2.4
+ENV FOSSIL_INSTALL_VERSION trunk
+# version-2.4
 
 RUN curl "http://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
 WORKDIR /fossil-src
-RUN ./configure --disable-fusefs --json --with-th1-docs --with-th1-hooks --with-tcl
+RUN ./configure --disable-fusefs --json --with-th1-docs --with-th1-hooks --with-tcl=1
 RUN make && \
 	strip fossil && \
 	chmod a+rx fossil
 	
-FROM resin/raspberry-pi-alpine:3.4
+FROM resin/rpi-raspbian:jessie-20171110
 
-RUN apk add --no-cache tcl openssl
+RUN apt-get update -y && \
+	apt-get install -y libssl1.0.0 libtcl8.6 && \
+	apt-get clean && \
+	groupadd -r fossil -g 433 && \
+	useradd -u 431 -r -g fossil -d /opt/fossil -s /sbin/nologin -c "Fossil user" fossil && \
+	mkdir -p /opt/fossil && \
+	chown fossil:fossil /opt/fossil
 
 COPY --from=base /fossil-src/fossil /usr/bin/
 
