@@ -1,8 +1,8 @@
-FROM resin/rpi-raspbian:jessie-20171110 as base
+FROM resin/rpi-raspbian:stretch-20180321 as base
 
 ### Now install some additional parts we will need for the build
 RUN apt-get update -y && \
-	apt-get install -y gcc make curl libssl-dev && \
+	apt-get install -y build-essential curl libssl-dev zlib1g-dev && \
 	apt-get clean && \
 	groupadd -r fossil -g 433 && \
 	useradd -u 431 -r -g fossil -d /opt/fossil -s /sbin/nologin -c "Fossil user" fossil
@@ -24,10 +24,10 @@ RUN make && \
 	strip fossil && \
 	chmod a+rx fossil
 	
-FROM resin/rpi-raspbian:jessie-20171110
+FROM resin/rpi-raspbian:stretch-20180321
 
 RUN apt-get update -y && \
-	apt-get install -y libssl1.0.0 libtcl8.6 && \
+	apt-get install -y libssl1.1 libtcl8.6 && \
 	apt-get clean && \
 	groupadd -r fossil -g 433 && \
 	useradd -u 431 -r -g fossil -d /opt/fossil -s /sbin/nologin -c "Fossil user" fossil && \
