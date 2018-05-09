@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian:stretch-20180321 as base
+FROM arm32v7/debian:9.4-slim as base
 
 ### Now install some additional parts we will need for the build
 RUN apt-get update -y && \
@@ -14,8 +14,8 @@ RUN cd tcl-src/unix && \
 	make install
 
 ### If you want to build "release", change the next line accordingly.
-ENV FOSSIL_INSTALL_VERSION trunk
-# version-2.4
+#ENV FOSSIL_INSTALL_VERSION trunk
+ENV FOSSIL_INSTALL_VERSION version-2.6
 
 RUN curl "http://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
 WORKDIR /fossil-src
@@ -24,7 +24,7 @@ RUN make && \
 	strip fossil && \
 	chmod a+rx fossil
 	
-FROM resin/rpi-raspbian:stretch-20180321
+FROM arm32v7/debian:9.4-slim
 
 RUN apt-get update -y && \
 	apt-get install -y libssl1.1 libtcl8.6 && \
