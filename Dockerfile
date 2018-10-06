@@ -1,17 +1,6 @@
-FROM arm32v7/debian:9.4-slim as base
+FROM alpine:3.7 as base
 
-### Now install some additional parts we will need for the build
-RUN apt-get update -y && \
-	apt-get install -y build-essential curl libssl-dev zlib1g-dev && \
-	apt-get clean && \
-	groupadd -r fossil -g 433 && \
-	useradd -u 431 -r -g fossil -d /opt/fossil -s /sbin/nologin -c "Fossil user" fossil
-
-RUN curl "http://core.tcl.tk/tcl/tarball/tcl-src.tar.gz?name=tcl-src&uuid=release" | tar zx
-RUN cd tcl-src/unix && \
-	./configure --prefix=/usr --disable-threads && \
-	make && \
-	make install
+RUN apk add libressl-dev sqlite-dev tcl-dev zlib-dev curl alpine-sdk
 
 ### If you want to build "release", change the next line accordingly.
 #ENV FOSSIL_INSTALL_VERSION trunk
@@ -24,20 +13,13 @@ RUN make && \
 	strip fossil && \
 	chmod a+rx fossil
 	
-FROM arm32v7/debian:9.4-slim
+FROM alpine:3.7
 
-RUN apt-get update -y && \
-	apt-get install -y libssl1.1 libtcl8.6 && \
-	apt-get clean && \
-	groupadd -r fossil -g 433 && \
-	useradd -u 431 -r -g fossil -d /opt/fossil -s /sbin/nologin -c "Fossil user" fossil && \
-	mkdir -p /opt/fossil && \
-	chown fossil:fossil /opt/fossil
+RUN apk add --no-cache openssl tcl
 
 COPY --from=base /fossil-src/fossil /usr/bin/
 
-USER fossil
-
+RUN mkdir -p /opt/fossil
 ENV HOME /opt/fossil
 
 EXPOSE 8080
