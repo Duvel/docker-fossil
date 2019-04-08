@@ -1,12 +1,12 @@
-Based on [nijtmans/fossil](https://registry.hub.docker.com/u/nijtmans/fossil/).
+Simple, high-reliability, distributed software configuration management system, also for the Raspberry Pi.
 
-Simple, high-reliability, distributed software configuration management system, build for the Raspberry Pi.
+Based on [nijtmans/fossil](https://registry.hub.docker.com/u/nijtmans/fossil/). Moved from [duvel/rpi-fossil](https://registry.hub.docker.com/u/duvel/rpi-fossil/) as there is now also an `amd64` image available.
 
-Tested on a Raspberry Pi B and a 2 B.
+Tested on a Raspberry Pi 2 B, 3 B en 3 B+.
 
 You can start it with:
 
-    sudo docker run -d -p 8080:8080 duvel/rpi-fossil
+    sudo docker run -d -p 8080:8080 duvel/fossil
 
 username = “admin”, password = “????”.
 
@@ -15,13 +15,6 @@ You can retrieve the password with:
     sudo docker logs <container>
 
 # Host existing repository
-## Prepare docker host
-
-	sudo su
-	groupadd -r fossil -g 433 && useradd -u 431 -r -g fossil -d /opt/fossil -s /sbin/nologin -c "Fossil user" fossil
-	mkdir fossils
-	chown fossil:fossil fossils
-	exit
 
 ## Add repository
 
@@ -29,4 +22,5 @@ You can retrieve the password with:
     sudo chown fossil:fossil fossils/duvel.fossil
 
 ## Run container
-	docker run -d -p 80:8080 -v /home/pi/fossils/duvel.fossil:/opt/fossil/repository.fossil --name duvel duvel/rpi-fossil
+
+    docker run -d -p 80:8080 -v /home/pi/fossils/duvel.fossil:/opt/fossil/repository.fossil --name duvel duvel/fossil
