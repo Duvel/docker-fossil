@@ -4,7 +4,7 @@ RUN apk add libressl-dev sqlite-dev tcl-dev zlib-dev curl alpine-sdk
 
 ### If you want to build "release", change the next line accordingly.
 #ENV FOSSIL_INSTALL_VERSION trunk
-ENV FOSSIL_INSTALL_VERSION version-2.11.2
+ENV FOSSIL_INSTALL_VERSION version-2.12.1
 
 RUN curl "https://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
 WORKDIR /fossil-src
