@@ -1,4 +1,4 @@
-FROM alpine:3.13 as base
+FROM alpine:3.12 as base
 
 RUN apk add libressl-dev sqlite-dev tcl-dev zlib-dev curl alpine-sdk
 
@@ -13,7 +13,7 @@ RUN make && \
 	strip fossil && \
 	chmod a+rx fossil
 	
-FROM alpine:3.13
+FROM alpine:3.12
 
 RUN apk add --no-cache libressl tcl
 
