@@ -6,7 +6,7 @@ RUN apk add libressl-dev sqlite-dev tcl-dev zlib-dev curl alpine-sdk
 #ENV FOSSIL_INSTALL_VERSION trunk
 ENV FOSSIL_INSTALL_VERSION version-2.13
 
-RUN curl "https://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
+RUN curl "https://www.fossil-scm.org/home/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
 WORKDIR /fossil-src
 RUN ./configure --disable-fusefs --json --with-th1-docs --with-th1-hooks --with-tcl=1
 RUN make && \
