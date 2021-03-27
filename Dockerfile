@@ -1,10 +1,10 @@
-FROM alpine:3.12 as base
+FROM alpine:3.13 as base
 
 RUN apk add libressl-dev sqlite-dev tcl-dev zlib-dev curl alpine-sdk
 
 ### If you want to build "release", change the next line accordingly.
 #ENV FOSSIL_INSTALL_VERSION trunk
-ENV FOSSIL_INSTALL_VERSION version-2.12.1
+ENV FOSSIL_INSTALL_VERSION version-2.13
 
 RUN curl "https://www.fossil-scm.org/index.html/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
 WORKDIR /fossil-src
@@ -13,7 +13,7 @@ RUN make && \
 	strip fossil && \
 	chmod a+rx fossil
 	
-FROM alpine:3.12
+FROM alpine:3.13
 
 RUN apk add --no-cache libressl tcl
 
