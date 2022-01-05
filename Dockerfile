@@ -1,11 +1,11 @@
 ARG ARCH=
-FROM ${ARCH}alpine:3.14 as base
+FROM ${ARCH}alpine:3.15 as base
 
 RUN apk add libressl-dev sqlite-dev tcl-dev zlib-dev curl alpine-sdk
 
 ### If you want to build "release", change the next line accordingly.
 #ENV FOSSIL_INSTALL_VERSION trunk
-ENV FOSSIL_INSTALL_VERSION version-2.16
+ENV FOSSIL_INSTALL_VERSION version-2.17
 
 RUN curl "https://www.fossil-scm.org/home/tarball/fossil-src.tar.gz?name=fossil-src&uuid=${FOSSIL_INSTALL_VERSION}" | tar zx
 WORKDIR /fossil-src
