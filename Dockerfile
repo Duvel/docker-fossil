@@ -1,5 +1,6 @@
 ARG ARCH=
-FROM ${ARCH}alpine:3.15 as base
+ARG ALPINE_VERSION=3.15
+FROM ${ARCH}alpine:${ALPINE_VERSION} as base
 
 RUN apk add libressl-dev sqlite-dev tcl-dev zlib-dev curl alpine-sdk
 
@@ -14,7 +15,7 @@ RUN make && \
 	strip fossil && \
 	chmod a+rx fossil
 	
-FROM ${ARCH}alpine:3.14
+FROM ${ARCH}alpine:${ALPINE_VERSION}
 
 RUN apk add --no-cache libressl tcl
 
