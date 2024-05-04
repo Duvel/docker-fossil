@@ -17,7 +17,7 @@ RUN make && \
 	
 FROM ${ARCH}alpine:${ALPINE_VERSION}
 
-RUN apk add --no-cache libressl tcl
+RUN apk add --no-cache libressl3.8-libcrypto libressl3.8-libssl tcl
 
 COPY --from=base /fossil-src/fossil /usr/bin/
 
